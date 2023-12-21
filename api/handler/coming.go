@@ -57,7 +57,7 @@ func (h *Handler) CreateComing(c *gin.Context) {
 // @Tags Coming
 // @Accept json
 // @Produce json
-// @Param id path string true "Coming ID"
+// @Param id query string true "Coming ID"
 // @Success 200 {object} models.Coming "Coming details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 401 {object} ErrorResponse "Unauthorized"
@@ -66,7 +66,7 @@ func (h *Handler) CreateComing(c *gin.Context) {
 // @Router /coming/{id} [get]
 func (h *Handler) GetByIDComing(c *gin.Context) {
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
 		return
@@ -155,7 +155,7 @@ func (h *Handler) GetListComing(c *gin.Context) {
 // @Tags Coming
 // @Accept json
 // @Produce json
-// @Param id path string true "Coming ID"
+// @Param id query string true "Coming ID"
 // @Param Coming body models.UpdateComing true "Updated Coming information"
 // @Success 202 {object} models.Coming "Updated Coming"
 // @Failure 400 {object} ErrorResponse "Bad Request"
@@ -173,7 +173,7 @@ func (h *Handler) UpdateComing(c *gin.Context) {
 		return
 	}
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
 		return
@@ -210,14 +210,14 @@ func (h *Handler) UpdateComing(c *gin.Context) {
 // @Tags Coming
 // @Accept json
 // @Produce json
-// @Param id path string true "Coming ID"
+// @Param id query string true "Coming ID"
 // @Success 204 "No Content"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 401 {object} ErrorResponse "Unauthorized"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /coming/{id} [delete]
 func (h *Handler) DeleteComing(c *gin.Context) {
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")

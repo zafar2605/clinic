@@ -460,7 +460,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Client ID",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -517,7 +517,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "id",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -565,7 +565,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "id",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -729,7 +729,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Coming ID",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -783,7 +783,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Coming ID",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     },
                     {
@@ -846,7 +846,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Coming ID",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -949,19 +949,19 @@ const docTemplate = `{
                         "type": "integer",
                         "description": "Offset",
                         "name": "offset",
-                        "in": "path"
+                        "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "Limit",
                         "name": "limit",
-                        "in": "path"
+                        "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "search",
                         "name": "search",
-                        "in": "path"
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1060,7 +1060,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "PickingList ID",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -1117,7 +1117,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "id",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -1165,7 +1165,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "id",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -1326,7 +1326,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Product ID",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -1383,7 +1383,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "id",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -1431,7 +1431,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "id",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -1538,19 +1538,19 @@ const docTemplate = `{
                         "type": "integer",
                         "description": "Offset",
                         "name": "offset",
-                        "in": "path"
+                        "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "Limit",
                         "name": "limit",
-                        "in": "path"
+                        "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "search",
                         "name": "search",
-                        "in": "path"
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1649,7 +1649,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Remainder ID",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -1706,7 +1706,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "id",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -1754,7 +1754,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "id",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -1915,7 +1915,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Sale ID",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -1972,7 +1972,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "id",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -2020,7 +2020,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "id",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -2181,7 +2181,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "SaleProduct ID",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -2238,7 +2238,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "id",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -2286,7 +2286,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "id",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],

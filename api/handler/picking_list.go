@@ -28,107 +28,107 @@ func (h *Handler) CreatePickingList(c *gin.Context) {
 	var createPickingList models.PickingList
 	err := c.ShouldBindJSON(&createPickingList)
 	if err != nil {
-	  handleResponse(c, 400, "ShouldBindJSON err:"+err.Error())
-	  return
+		handleResponse(c, 400, "ShouldBindJSON err:"+err.Error())
+		return
 	}
-  
+
 	ctx, cancel := context.WithTimeout(context.Background(), config.CtxTimeout)
 	defer cancel()
-  
+
 	// get Coming List
 	coming, err := h.strg.Coming().GetList(ctx, &models.GetListComingRequest{
-	  Limit: 10000,
+		Limit: 10000,
 	})
 	if err != nil {
-	  handleResponse(c, http.StatusInternalServerError, err)
-	  return
+		handleResponse(c, http.StatusInternalServerError, err)
+		return
 	}
 	var (
-	  cominggg     models.Coming
-	  id           sql.NullString
-	  productID    sql.NullString
-	  productName  sql.NullString
-	  quantity     sql.NullInt64
-	  coming_price sql.NullFloat64
-	  salePrice    sql.NullFloat64
-	  branchID     sql.NullString
+		cominggg     models.Coming
+		id           sql.NullString
+		productID    sql.NullString
+		productName  sql.NullString
+		quantity     sql.NullInt64
+		coming_price sql.NullFloat64
+		salePrice    sql.NullFloat64
+		branchID     sql.NullString
 	)
 	for _, v := range coming.Cominges {
-	  if v.IncrementID == createPickingList.ComingIncrementID {
-		createPickingList.ComingID = v.Id
-		cominggg.BranchID = v.BranchID
-	  }
+		if v.IncrementID == createPickingList.ComingIncrementID {
+			createPickingList.ComingID = v.Id
+			cominggg.BranchID = v.BranchID
+		}
 	}
-  
+
 	// create picking_list
 	resp, err := h.strg.PickingList().Create(ctx, &createPickingList)
 	if err != nil {
-	  handleResponse(c, http.StatusInternalServerError, err)
-	  return
+		handleResponse(c, http.StatusInternalServerError, err)
+		return
 	}
-  
+
 	// Get product
 	productResp, err := h.strg.Product().GetByID(ctx, &models.ProductPrimaryKey{Id: createPickingList.Product_ID})
 	if err != nil {
-	  handleResponse(c, http.StatusBadRequest, err)
-	  return
+		handleResponse(c, http.StatusBadRequest, err)
+		return
 	}
-  
+
 	listRemainder, err := h.strg.Remainder().GetList(ctx, &models.GetListRemainderRequest{Limit: 1000})
 	if len(listRemainder.Remainders) == 0 {
-	  _, err = h.strg.Remainder().Create(ctx, &models.Remainder{
-		ProductID:   productResp.Id,
-		Name:        productResp.Name,
-		Quantity:    createPickingList.Quantity,
-		ComingPrice: createPickingList.Price,
-		SalePrice:   productResp.Price,
-		BranchID:    cominggg.BranchID,
-	  })
-	  handleResponse(c, http.StatusAccepted, err)
-	  return
+		_, err = h.strg.Remainder().Create(ctx, &models.Remainder{
+			ProductID:   productResp.Id,
+			Name:        productResp.Name,
+			Quantity:    createPickingList.Quantity,
+			ComingPrice: createPickingList.Price,
+			SalePrice:   productResp.Price,
+			BranchID:    cominggg.BranchID,
+		})
+		handleResponse(c, http.StatusAccepted, err)
+		return
 	}
 	if err != nil {
-	  handleResponse(c, http.StatusBadRequest, err)
-	  return
+		handleResponse(c, http.StatusBadRequest, err)
+		return
 	}
-  
+
 	for _, v := range listRemainder.Remainders {
-  
-	  if v.BranchID == cominggg.BranchID && v.ProductID == createPickingList.Product_ID {
-		id.String = v.Id
-		productID.String = v.ProductID
-		productName.String = v.Name
-		quantity.Int64 = int64(v.Quantity)
-		coming_price.Float64 = v.ComingPrice
-		salePrice.Float64 = productResp.Price
-		branchID.String = v.BranchID
-		break
-	  }
+
+		if v.BranchID == cominggg.BranchID && v.ProductID == createPickingList.Product_ID {
+			id.String = v.Id
+			productID.String = v.ProductID
+			productName.String = v.Name
+			quantity.Int64 = int64(v.Quantity)
+			coming_price.Float64 = v.ComingPrice
+			salePrice.Float64 = productResp.Price
+			branchID.String = v.BranchID
+			break
+		}
 	}
-  
+
 	_, err = h.strg.Remainder().Update(ctx, &models.Remainder{
-	  Id:          id.String,
-	  ProductID:   productID.String,
-	  Name:        productName.String,
-	  Quantity:    int(quantity.Int64) + createPickingList.Quantity,
-	  ComingPrice: coming_price.Float64,
-	  SalePrice:   salePrice.Float64,
-	  BranchID:    branchID.String,
+		Id:          id.String,
+		ProductID:   productID.String,
+		Name:        productName.String,
+		Quantity:    int(quantity.Int64) + createPickingList.Quantity,
+		ComingPrice: coming_price.Float64,
+		SalePrice:   salePrice.Float64,
+		BranchID:    branchID.String,
 	})
 	if err != nil {
-	  handleResponse(c, http.StatusBadRequest, err)
-	  return
+		handleResponse(c, http.StatusBadRequest, err)
+		return
 	}
-  
+
 	handleResponse(c, http.StatusCreated, resp)
-  }
+}
 
 // @Summary Get a PickingList by ID
 // @Description Get PickingList details by its ID.
 // @Tags PickingList
 // @Accept json
 // @Produce json
-// @Param id path string true "PickingList ID"
+// @Param id query string true "PickingList ID"
 // @Success 200 {object} models.PickingList "PickingList details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "PickingList not found"
@@ -136,7 +136,7 @@ func (h *Handler) CreatePickingList(c *gin.Context) {
 // @Router /picking_list/{id} [get]
 func (h *Handler) GetByIDPickingList(c *gin.Context) {
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
@@ -165,9 +165,9 @@ func (h *Handler) GetByIDPickingList(c *gin.Context) {
 // @Tags PickingList
 // @Accept json
 // @Produce json
-// @Param offset path int false "Offset"
-// @Param limit path int false "Limit"
-// @Param search path int false "search"
+// @Param offset query int false "Offset"
+// @Param limit query int false "Limit"
+// @Param search query int false "search"
 // @Success 200 {object} models.PickingList "PickingList details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "PickingList not found"
@@ -222,7 +222,7 @@ func (h *Handler) GetListPickingList(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param object body models.UpdatePickingList true "models.UpdatePickingList"
-// @Param id path string true "id"
+// @Param id query string true "id"
 // @Success 200 {object} models.PickingList "PickingList details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "PickingList not found"
@@ -238,7 +238,7 @@ func (h *Handler) UpdatePickingList(c *gin.Context) {
 		return
 	}
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
 		return
@@ -277,14 +277,14 @@ func (h *Handler) UpdatePickingList(c *gin.Context) {
 // @Tags PickingList
 // @Accept json
 // @Produce json
-// @Param id path string true "id"
+// @Param id query string true "id"
 // @Success 200 {object} models.PickingList "PickingList details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "PickingList not found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /picking_list/{id} [delete]
 func (h *Handler) DeletePickingList(c *gin.Context) {
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")

@@ -35,6 +35,7 @@ func (r *clientRepo) Create(ctx context.Context, req *models.CreateClient) (*mod
 				"birthday",
 				"gender",
 				"branch_id",
+				"active",
 				"updated_at"
 			) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9, NOW())`
 		birthday, err = time.Parse("2006-01-02", req.Birthday)
@@ -53,10 +54,20 @@ func (r *clientRepo) Create(ctx context.Context, req *models.CreateClient) (*mod
 		birthday.Format("2006-01-02"),
 		req.Gender,
 		req.BranchID,
-		"active",
+		req.Active,
 	)
-
 	if err != nil {
+		fmt.Println(
+			clientId,
+			req.FirstName,
+			req.LastName,
+			req.FatherName,
+			req.Phone,
+			birthday,
+			req.Gender,
+			req.BranchID,
+			req.Active)
+
 		return nil, err
 	}
 

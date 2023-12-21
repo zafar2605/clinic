@@ -676,7 +676,7 @@ paths:
       description: Get List Client details by its ok
       parameters:
       - description: id
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -708,7 +708,7 @@ paths:
       description: Get Client details by its ID.
       parameters:
       - description: Client ID
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -746,7 +746,7 @@ paths:
         schema:
           $ref: '#/definitions/models.UpdateClient'
       - description: id
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -854,7 +854,7 @@ paths:
       description: Delete an existing Coming.
       parameters:
       - description: Coming ID
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -884,7 +884,7 @@ paths:
       description: Get Coming details by its ID.
       parameters:
       - description: Coming ID
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -920,7 +920,7 @@ paths:
       description: Update an existing Coming.
       parameters:
       - description: Coming ID
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1000,15 +1000,15 @@ paths:
       description: Get List PickingList details by its ok.
       parameters:
       - description: Offset
-        in: path
+        in: query
         name: offset
         type: integer
       - description: Limit
-        in: path
+        in: query
         name: limit
         type: integer
       - description: search
-        in: path
+        in: query
         name: search
         type: integer
       produces:
@@ -1073,7 +1073,7 @@ paths:
       description: Get List PickingList details by its ok
       parameters:
       - description: id
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1105,7 +1105,7 @@ paths:
       description: Get PickingList details by its ID.
       parameters:
       - description: PickingList ID
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1143,7 +1143,7 @@ paths:
         schema:
           $ref: '#/definitions/models.UpdatePickingList'
       - description: id
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1249,7 +1249,7 @@ paths:
       description: Get List Product details by its ok
       parameters:
       - description: id
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1281,7 +1281,7 @@ paths:
       description: Get Product details by its ID.
       parameters:
       - description: Product ID
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1319,7 +1319,7 @@ paths:
         schema:
           $ref: '#/definitions/models.UpdateProduct'
       - description: id
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1390,15 +1390,15 @@ paths:
       description: Get List Remainder details by its ok.
       parameters:
       - description: Offset
-        in: path
+        in: query
         name: offset
         type: integer
       - description: Limit
-        in: path
+        in: query
         name: limit
         type: integer
       - description: search
-        in: path
+        in: query
         name: search
         type: integer
       produces:
@@ -1463,7 +1463,7 @@ paths:
       description: Get List Remainder details by its ok
       parameters:
       - description: id
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1495,7 +1495,7 @@ paths:
       description: Get Remainder details by its ID.
       parameters:
       - description: Remainder ID
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1533,7 +1533,7 @@ paths:
         schema:
           $ref: '#/definitions/models.UpdateRemainder'
       - description: id
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1639,7 +1639,7 @@ paths:
       description: Get List Sale details by its ok
       parameters:
       - description: id
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1671,7 +1671,7 @@ paths:
       description: Get Sale details by its ID.
       parameters:
       - description: Sale ID
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1709,7 +1709,7 @@ paths:
         schema:
           $ref: '#/definitions/models.UpdateSale'
       - description: id
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1815,7 +1815,7 @@ paths:
       description: Get List SaleProduct details by its ok
       parameters:
       - description: id
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1847,7 +1847,7 @@ paths:
       description: Get SaleProduct details by its ID.
       parameters:
       - description: SaleProduct ID
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -1885,7 +1885,7 @@ paths:
         schema:
           $ref: '#/definitions/models.UpdateSaleProduct'
       - description: id
-        in: path
+        in: query
         name: id
         required: true
         type: string

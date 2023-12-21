@@ -49,7 +49,7 @@ func (h *Handler) CreateProduct(c *gin.Context) {
 // @Tags Product
 // @Accept json
 // @Produce json
-// @Param id path string true "Product ID"
+// @Param id query string true "Product ID"
 // @Success 200 {object} models.Product "Product details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "Product not found"
@@ -57,7 +57,7 @@ func (h *Handler) CreateProduct(c *gin.Context) {
 // @Router /product/{id} [get]
 func (h *Handler) GetByIDProduct(c *gin.Context) {
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
@@ -143,7 +143,7 @@ func (h *Handler) GetListProduct(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param object body models.UpdateProduct true "models.UpdateProduct"
-// @Param id path string true "id"
+// @Param id query string true "id"
 // @Success 200 {object} models.Product "Product details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "Product not found"
@@ -159,7 +159,7 @@ func (h *Handler) UpdateProduct(c *gin.Context) {
 		return
 	}
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
 		return
@@ -198,14 +198,14 @@ func (h *Handler) UpdateProduct(c *gin.Context) {
 // @Tags Product
 // @Accept json
 // @Produce json
-// @Param id path string true "id"
+// @Param id query string true "id"
 // @Success 200 {object} models.Product "Product details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "Product not found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /product/{id} [delete]
 func (h *Handler) DeleteProduct(c *gin.Context) {
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")

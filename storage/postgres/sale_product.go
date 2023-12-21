@@ -12,6 +12,8 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
+
+
 type saleProductRepo struct {
 	db *pgxpool.Pool
 }
@@ -40,7 +42,7 @@ func (r *saleProductRepo) Create(ctx context.Context, req *models.CreateSaleProd
 		query1 = `SELECT quantity FROM remainder WHERE product_id = $1 AND branch_id = $2`
 		query2 = `SELECT price FROM product WHERE id = $1`
 		query3 = `UPDATE sale 
-				  SET total_price = total_price + $1
+				  SET total_price = sale.total_price + $1
 				  WHERE id = $2
 		`
 		query4 =`SELECT branch_id from sale where id = $1`
@@ -48,27 +50,30 @@ func (r *saleProductRepo) Create(ctx context.Context, req *models.CreateSaleProd
 		remaining sql.NullInt64
 		price sql.NullFloat64
 	)
+	
 	err := r.db.QueryRow(ctx,query4,req.SaleID).Scan(&branchId,)
 	if err == sql.ErrNoRows {
         return nil, errors.New("no such product")
-    }
+
+	}
+
 	
 
 	err = r.db.QueryRow(ctx,query1,req.ProcutID,branchId.String).Scan(&remaining,)
 	if err!=nil{
-		return nil,err
+		return nil,errors.New("no such product")
 	}
-	fmt.Println(remaining.Int64)
 	
 	if remaining.Int64 < int64(req.Quantity){
 		return nil, errors.New("not enough quantity")
 	}
-
+	
 	err = r.db.QueryRow(ctx,query2,req.ProcutID).Scan(&price,)
 	if err!=nil{
 		return nil,err
 	}
-
+	
+	req.TotalPrice = float64(req.Quantity) * price.Float64
 
 	_, err = r.db.Exec(ctx,
 		query,
@@ -78,18 +83,18 @@ func (r *saleProductRepo) Create(ctx context.Context, req *models.CreateSaleProd
 		req.SaleIncrementID,
 		req.Quantity,
 		price.Float64,
-		float64(req.Quantity) * price.Float64,
+		req.TotalPrice,
 	)
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Println(float64(req.Quantity)*price.Float64)
+	
+	_,err = r.db.Exec(ctx,query3,req.TotalPrice,req.SaleID)
 	fmt.Println(query3)
-	_,err = r.db.Exec(ctx,query3,float64(req.Quantity)*price.Float64,req.SaleID)
 	if err!=nil{
 		return nil,err
 	}
+	fmt.Println("ok3")	
 	if remaining.Int64 > 0 || remaining.Int64 > int64(req.Quantity){
 	_,err = r.db.Exec(ctx,`UPDATE remainder SET quantity = quantity - $1 where product_id = $2 AND branch_id = $3`,req.Quantity,req.ProcutID,branchId)
 	if err!=nil{

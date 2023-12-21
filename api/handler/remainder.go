@@ -58,7 +58,7 @@ func (h *Handler) CreateRemainder(c *gin.Context) {
 // @Tags Remainder
 // @Accept json
 // @Produce json
-// @Param id path string true "Remainder ID"
+// @Param id query string true "Remainder ID"
 // @Success 200 {object} models.Remainder "Remainder details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "Remainder not found"
@@ -66,7 +66,7 @@ func (h *Handler) CreateRemainder(c *gin.Context) {
 // @Router /remainder/{id} [get]
 func (h *Handler) GetByIDRemainder(c *gin.Context) {
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
@@ -95,9 +95,9 @@ func (h *Handler) GetByIDRemainder(c *gin.Context) {
 // @Tags Remainder
 // @Accept json
 // @Produce json
-// @Param offset path int false "Offset"
-// @Param limit path int false "Limit"
-// @Param search path int false "search"
+// @Param offset query int false "Offset"
+// @Param limit query int false "Limit"
+// @Param search query int false "search"
 // @Success 200 {object} models.Remainder "Remainder details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "Remainder not found"
@@ -152,7 +152,7 @@ func (h *Handler) GetListRemainder(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param object body models.UpdateRemainder true "models.UpdateRemainder"
-// @Param id path string true "id"
+// @Param id query string true "id"
 // @Success 200 {object} models.Remainder "Remainder details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "Remainder not found"
@@ -168,7 +168,7 @@ func (h *Handler) UpdateRemainder(c *gin.Context) {
 		return
 	}
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
 		return
@@ -207,14 +207,14 @@ func (h *Handler) UpdateRemainder(c *gin.Context) {
 // @Tags Remainder
 // @Accept json
 // @Produce json
-// @Param id path string true "id"
+// @Param id query string true "id"
 // @Success 200 {object} models.Remainder "Remainder details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "Remainder not found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /remainder/{id} [delete]
 func (h *Handler) DeleteRemainder(c *gin.Context) {
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")

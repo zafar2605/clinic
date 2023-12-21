@@ -57,7 +57,7 @@ func (h *Handler) CreateBranch(c *gin.Context) {
 // @Router /branch/{id} [get]
 func (h *Handler) GetByIDBranch(c *gin.Context) {
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")

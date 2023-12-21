@@ -41,7 +41,7 @@ func (h *Handler) CreateSale(c *gin.Context) {
 		return
 	}
 
-	createSale.IncrementID= "S-" + incrementId
+	createSale.IncrementID = "S-" + incrementId
 
 	resp, err := h.strg.Sale().Create(ctx, &createSale)
 	if err != nil {
@@ -57,7 +57,7 @@ func (h *Handler) CreateSale(c *gin.Context) {
 // @Tags Sale
 // @Accept json
 // @Produce json
-// @Param id path string true "Sale ID"
+// @Param id query string true "Sale ID"
 // @Success 200 {object} models.Sale "Sale details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "Sale not found"
@@ -65,7 +65,7 @@ func (h *Handler) CreateSale(c *gin.Context) {
 // @Router /sale/{id} [get]
 func (h *Handler) GetByIDSale(c *gin.Context) {
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
@@ -152,7 +152,7 @@ func (h *Handler) GetListSale(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param object body models.UpdateSale true "models.UpdateSale"
-// @Param id path string true "id"
+// @Param id query string true "id"
 // @Success 200 {object} models.Sale "Sale details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "Sale not found"
@@ -168,7 +168,7 @@ func (h *Handler) UpdateSale(c *gin.Context) {
 		return
 	}
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
 		return
@@ -207,14 +207,14 @@ func (h *Handler) UpdateSale(c *gin.Context) {
 // @Tags Sale
 // @Accept json
 // @Produce json
-// @Param id path string true "id"
+// @Param id query string true "id"
 // @Success 200 {object} models.Sale "Sale details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "Sale not found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /sale/{id} [delete]
 func (h *Handler) DeleteSale(c *gin.Context) {
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")

@@ -31,9 +31,11 @@ func (r *pickingListRepo) Create(ctx context.Context, req *models.PickingList) (
 				"product_id",
 				"quantity",
 				"coming_id",
+				"price",
+				"total_price",
 				"coming_increment_id",
 				"updated_at"
-			) VALUES ($1, $2, $3, $4, $5, NOW())`
+			) VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`
 	)
 
 	_, err := r.db.Exec(ctx,
@@ -42,6 +44,8 @@ func (r *pickingListRepo) Create(ctx context.Context, req *models.PickingList) (
 		req.Product_ID,
 		req.Quantity,
 		req.ComingID,
+		req.Price,
+		req.Price*float64(req.Quantity),
 		req.ComingIncrementID,
 	)
 
@@ -148,7 +152,7 @@ func (r *pickingListRepo) GetList(ctx context.Context, req *models.GetListPickin
 				"coming_id",
 				"coming_increment_id",
 				"created_at",
-				"updated_at",
+				"updated_at"
 		FROM "picking_list"
 	`
 
@@ -209,8 +213,9 @@ func (r *pickingListRepo) Update(ctx context.Context, req *models.PickingList) (
 			SET
 				"product_id" = $2,
 				"quantity" = $3,
-				"coming_id" = $4,
-				"coming_increment_id" = $5,
+				"price" = $4,
+				"coming_id" = $5,
+				"coming_increment_id" = $6,
 				"updated_at" = NOW()
 		WHERE "id" = $1
 	`
@@ -219,6 +224,7 @@ func (r *pickingListRepo) Update(ctx context.Context, req *models.PickingList) (
 		req.ID,
 		req.Product_ID,
 		req.Quantity,
+		req.Price,
 		req.ComingID,
 		req.ComingIncrementID,
 	)

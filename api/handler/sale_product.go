@@ -32,11 +32,8 @@ func (h *Handler) CreateSaleProduct(c *gin.Context) {
 		return
 	}
 
-	
-
 	ctx, cancel := context.WithTimeout(context.Background(), config.CtxTimeout)
 	defer cancel()
-	
 
 	resp, err := h.strg.SaleProduct().Create(ctx, &createSaleProduct)
 	if err != nil {
@@ -52,7 +49,7 @@ func (h *Handler) CreateSaleProduct(c *gin.Context) {
 // @Tags SaleProduct
 // @Accept json
 // @Produce json
-// @Param id path string true "SaleProduct ID"
+// @Param id query string true "SaleProduct ID"
 // @Success 200 {object} models.SaleProduct "SaleProduct details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "SaleProduct not found"
@@ -60,7 +57,7 @@ func (h *Handler) CreateSaleProduct(c *gin.Context) {
 // @Router /saleproduct/{id} [get]
 func (h *Handler) GetByIDSaleProduct(c *gin.Context) {
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
@@ -146,7 +143,7 @@ func (h *Handler) GetListSaleProduct(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param object body models.UpdateSaleProduct true "models.UpdateSaleProduct"
-// @Param id path string true "id"
+// @Param id query string true "id"
 // @Success 200 {object} models.SaleProduct "SaleProduct details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "SaleProduct not found"
@@ -162,7 +159,7 @@ func (h *Handler) UpdateSaleProduct(c *gin.Context) {
 		return
 	}
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
 		return
@@ -201,14 +198,14 @@ func (h *Handler) UpdateSaleProduct(c *gin.Context) {
 // @Tags SaleProduct
 // @Accept json
 // @Produce json
-// @Param id path string true "id"
+// @Param id query string true "id"
 // @Success 200 {object} models.SaleProduct "SaleProduct details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "SaleProduct not found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /saleproduct/{id} [delete]
 func (h *Handler) DeleteSaleProduct(c *gin.Context) {
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
@@ -227,5 +224,3 @@ func (h *Handler) DeleteSaleProduct(c *gin.Context) {
 	handleResponse(c, http.StatusOK, "deleted")
 
 }
-
-

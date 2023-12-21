@@ -50,7 +50,7 @@ func (h *Handler) CreateClient(c *gin.Context) {
 // @Tags Client
 // @Accept json
 // @Produce json
-// @Param id path string true "Client ID"
+// @Param id query string true "Client ID"
 // @Success 200 {object} models.Client "Client details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "Client not found"
@@ -58,7 +58,8 @@ func (h *Handler) CreateClient(c *gin.Context) {
 // @Router /client/{id} [get]
 func (h *Handler) GetByIDClient(c *gin.Context) {
 
-	var id = c.Param("id")
+	var id = c.Query("id")
+	fmt.Println(id)
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
@@ -110,7 +111,7 @@ func (h *Handler) GetListClient(c *gin.Context) {
 	}
 
 	search := c.Query("search")
-	fmt.Println(search,limit,offset)
+	fmt.Println(search, limit, offset)
 	if err != nil {
 		handleResponse(c, http.StatusBadRequest, "invalid query search")
 		return
@@ -145,7 +146,7 @@ func (h *Handler) GetListClient(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param object body models.UpdateClient true "models.UpdateClient"
-// @Param id path string true "id"
+// @Param id query string true "id"
 // @Success 200 {object} models.Client "Client details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "Client not found"
@@ -161,7 +162,7 @@ func (h *Handler) UpdateClient(c *gin.Context) {
 		return
 	}
 
-	var id = c.Param("id")
+	var id = c.Query("id")
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
 		return
@@ -200,14 +201,14 @@ func (h *Handler) UpdateClient(c *gin.Context) {
 // @Tags Client
 // @Accept json
 // @Produce json
-// @Param id path string true "id"
+// @Param id query string true "id"
 // @Success 200 {object} models.Client "Client details"
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 404 {object} ErrorResponse "Client not found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /client/{id} [delete]
 func (h *Handler) DeleteClient(c *gin.Context) {
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if !helpers.IsValidUUID(id) {
 		handleResponse(c, http.StatusBadRequest, "id is not uuid")
